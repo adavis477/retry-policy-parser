@@ -61,6 +61,19 @@ it's built — every parsing and formatting decision should be checkable with
 a plain `assert_eq!` and a string, which is also why the test modules next
 to each source file lean on exactly that.
 
+## CLI
+
+A `retryspec` binary validates a policy file and prints its canonical form:
+
+```
+$ retryspec policy.txt
+max_attempts=5, backoff=exponential(base=200ms, factor=2, max=30s), jitter=full
+```
+
+On invalid input it prints the parse error to stderr and exits with a
+non-zero status, so it can be dropped into a pre-commit hook or a CI step
+that checks a policy file in.
+
 ## Status
 
 This is a first pass at the format and the two functions that read and
